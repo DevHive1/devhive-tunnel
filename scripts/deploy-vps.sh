@@ -185,6 +185,20 @@ ufw allow "$CONTROL_PORT/tcp" >/dev/null
 ufw --force enable >/dev/null
 log "firewall: 22, 80, 443, $CONTROL_PORT/tcp open"
 
+# Oracle Cloud Ubuntu images also keep a raw iptables ruleset that can REJECT
+# traffic before ufw sees it. Prepend explicit ACCEPTs and persist them.
+if command -v iptables >/dev/null 2>&1; then
+  for p in 22 80 443 "$CONTROL_PORT"; do
+    iptables -C INPUT -p tcp --dport "$p" -j ACCEPT 2>/dev/null ||
+      iptables -I INPUT 1 -p tcp --dport "$p" -j ACCEPT || true
+  done
+  if command -v netfilter-persistent >/dev/null 2>&1; then
+    netfilter-persistent save >/dev/null 2>&1 || true
+  elif [ -d /etc/iptables ]; then
+    iptables-save >/etc/iptables/rules.v4 2>/dev/null || true
+  fi
+fi
+
 if command -v systemctl >/dev/null 2>&1; then
   sleep 1
   systemctl --no-pager --lines=0 status devhive-hub >/dev/null 2>&1 ||
