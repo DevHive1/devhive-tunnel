@@ -1,0 +1,52 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Build release assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${GITHUB_REF_TYPE:-}" = "tag" ]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+          else
+            VERSION="0.1.0-snapshot"
+          fi
+          mkdir -p assets
+          build() {
+            local os="$1" arch="$2" cmd="$3" ext="$4"
+            GOOS="$os" GOARCH="$arch" CGO_ENABLED=0 go build -trimpath \
+              -ldflags "-s -w -X devhive-tunnel/pkg/conf.Version=$VERSION" \
+              -o "assets/$cmd-$os-$arch$ext" "./cmd/$cmd"
+          }
+          for cmd in devtun devhive-hub dh-mcp; do
+            build linux amd64 "$cmd" ""
+            build linux arm64 "$cmd" ""
+            build windows amd64 "$cmd" ".exe"
+            build android arm64 "$cmd" ""
+          done
+          (cd assets && sha256sum -- * > ../checksums.txt)
+          cat checksums.txt
+
+      - uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          generate_release_notes: true
+          files: |
+            assets/*
+            checksums.txt

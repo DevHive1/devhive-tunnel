@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#f5b82e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="devhive">
+<title>devhive · dashboard</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div id="login" class="login-wrap">
+  <div class="login-card">
+    <div class="brand">
+      <div class="logo">🐝</div>
+      <div>
+        <h1>devhive-tunnel</h1>
+        <small data-i18n="console">secure network console</small>
+      </div>
+    </div>
+    <div class="login-tabs">
+      <button id="tabOwner" data-i18n="owner" class="on">Network Owner</button>
+      <button id="tabGM" data-i18n="gm">GM Superuser</button>
+    </div>
+    <div id="ownerForm">
+      <div class="field">
+        <label data-i18n="networkNameId">Network name or ID</label>
+        <input id="ownerNet" autocomplete="username" placeholder="dh-… / my team">
+      </div>
+      <div class="field">
+        <label data-i18n="adminKey">Admin key</label>
+        <input id="ownerKey" type="password" autocomplete="current-password" placeholder="••••••••••••">
+      </div>
+      <button class="btn primary" style="width:100%" data-i18n="signIn" id="ownerGo">Sign in</button>
+    </div>
+    <div id="gmForm" class="hidden">
+      <div class="field">
+        <label data-i18n="gmKey">GM superuser key</label>
+        <input id="gmKey" type="password" autocomplete="current-password" placeholder="••••••••••••••••">
+      </div>
+      <button class="btn primary" style="width:100%" data-i18n="signIn" id="gmGo">Sign in</button>
+    </div>
+    <div class="err" id="loginErr"></div>
+    <div class="footnote" style="display:flex;justify-content:space-between;align-items:center">
+      <span data-i18n="ownerOnlyNote">Only the network owner has control access</span>
+      <button class="btn ghost small" id="langBtn">عربي</button>
+    </div>
+  </div>
+</div>
+
+<div id="app" class="shell hidden">
+  <aside class="side" id="side">
+    <div class="brand">
+      <div class="logo">🐝</div>
+      <div>
+        <h1>devhive</h1>
+        <small id="sideSub">tunnel console</small>
+      </div>
+    </div>
+    <nav id="nav"></nav>
+    <div class="foot">
+      <div class="chip"><span class="dot" id="liveDot"></span><span id="liveTxt" data-i18n="live">live</span></div>
+      <div class="chip" id="whoChip">—</div>
+      <div style="display:flex;gap:6px">
+        <button class="btn small ghost" id="langBtn2" style="flex:1">عربي</button>
+        <button class="btn small danger" id="logoutBtn" style="flex:1" data-i18n="logout">Logout</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <button class="btn small menu-btn" id="menuBtn">☰</button>
+      <h2 id="pageTitle">Overview</h2>
+      <div class="sp"></div>
+      <span class="role-badge" id="roleBadge">OWNER</span>
+      <button class="btn small ghost" id="refreshBtn" data-i18n="refresh">Refresh</button>
+    </div>
+    <div id="view"></div>
+    <div class="footnote" data-i18n="footnote">devhive-tunnel · end-to-end encrypted mesh · dashboard secured with per-network owner keys</div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<script src="/app.js"></script>
+</body>
+</html>

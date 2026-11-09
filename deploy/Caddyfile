@@ -1,0 +1,15 @@
+# devhive-tunnel dashboard · automatic HTTPS via Caddy.
+# Replace hub.example.com with your domain (e.g. myhive.duckdns.org).
+hub.example.com {
+    encode zstd gzip
+    reverse_proxy 127.0.0.1:7600 {
+        flush_interval -1
+    }
+
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "no-referrer"
+    }
+}
