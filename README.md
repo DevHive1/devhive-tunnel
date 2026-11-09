@@ -40,6 +40,8 @@ No accounts, no sign-up, no cloud dependency: you run the hub, you own the keys.
 - **MCP server** — `dh-mcp` exposes networks/chat/files to AI agents (Claude Desktop, Cursor,
   opencode, …) over stdio.
 - **Termux-first** — prebuilt android/arm64 binaries, one-shot bootstrap script.
+- **Free downloads** — releases at https://github.com/DevHive1/devhive-tunnel/releases
+  (built by GitHub Actions, free download counters per asset).
 
 ## Quick start
 
@@ -185,7 +187,7 @@ make test           # unit + end-to-end suite
 make e2e            # hub integration test (create→join→chat→files→invites→GM)
 make dist           # cross-compile linux/windows/android + arm64
 scripts/termux-bootstrap.sh   # Termux (no root)
-DOMAIN=myhive.duckdns.org REPO=you/devhive-tunnel \
+DOMAIN=myhive.duckdns.org REPO=DevHive1/devhive-tunnel \
   scripts/deploy-vps.sh      # free VPS deploy (root; Ubuntu/Oracle)
 ```
 

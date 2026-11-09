@@ -915,7 +915,7 @@ git push origin v0.1.0
 sudo -i
 DOMAIN=myhive.duckdns.org \
 EMAIL=you@example.com \
-REPO=you/devhive-tunnel \
+REPO=DevHive1/devhive-tunnel \
 DUCKDNS_DOMAIN=myhive \
 DUCKDNS_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx \
 bash scripts/deploy-vps.sh

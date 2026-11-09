@@ -6,7 +6,7 @@
 #           optional DuckDNS dynamic DNS updater.
 #
 # Usage (as root):
-#   DOMAIN=myhive.duckdns.org EMAIL=me@example.com REPO=you/devhive-tunnel \
+#   DOMAIN=myhive.duckdns.org EMAIL=me@example.com REPO=DevHive1/devhive-tunnel \
 #     bash scripts/deploy-vps.sh
 #
 # Or with a prebuilt binary instead of GitHub Releases:
